@@ -29,18 +29,18 @@ export const appConfig: AppConfig = {
     adminController: "0x0f36aa1064Cf545eb435E33e4F23dec098362E7C"
   },
   theme: {
-    bg: "#091019",
-    surface: "rgba(11, 20, 34, 0.82)",
-    surfaceStrong: "rgba(13, 24, 40, 0.98)",
-    line: "rgba(107, 179, 255, 0.16)",
-    text: "#edf5ff",
-    muted: "#9cb0c7",
-    accent: "#78c6ff",
-    accentSoft: "rgba(120, 198, 255, 0.12)",
-    accentStrong: "#5ae1ff",
-    glowA: "rgba(120, 198, 255, 0.18)",
-    glowB: "rgba(90, 225, 255, 0.14)",
-    gradient: "linear-gradient(135deg, #78c6ff 0%, #5ae1ff 100%)"
+    bg: "#091117",
+    surface: "rgba(12, 20, 29, 0.84)",
+    surfaceStrong: "rgba(14, 24, 34, 0.98)",
+    line: "rgba(118, 223, 228, 0.16)",
+    text: "#ebf8fb",
+    muted: "#9db7bc",
+    accent: "#76dfe4",
+    accentSoft: "rgba(118, 223, 228, 0.12)",
+    accentStrong: "#44d3da",
+    glowA: "rgba(118, 223, 228, 0.18)",
+    glowB: "rgba(83, 171, 255, 0.12)",
+    gradient: "linear-gradient(135deg, #76dfe4 0%, #53abff 100%)"
   },
   heroStats: [
     { label: "Critical findings", value: "2" },
