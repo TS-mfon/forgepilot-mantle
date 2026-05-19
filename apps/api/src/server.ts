@@ -11,14 +11,22 @@ import {
   createWalletLabel,
   getAlertRules,
   getProtocols,
+  getRuntimeStatus,
   getSignals,
+  getStarterWorkflows,
   getTheses,
   getWalletByAddress,
   getWatchlists
 } from "./repository.js";
 
 const app = express();
-app.use(cors());
+const allowedOrigins = env.CORS_ORIGINS?.split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+app.use(cors({
+  origin: allowedOrigins && allowedOrigins.length > 0 ? allowedOrigins : true
+}));
 app.use(express.json());
 
 const asyncRoute =
@@ -30,10 +38,14 @@ app.get("/health", asyncRoute(async (_req, res) => {
   await pool.query("select 1");
   res.json({
     status: "ok",
-    service: "forgepilot_mantle-api",
+    service: `${env.POSTGRES_DB}-api`,
     environment: env.NODE_ENV,
     timestamp: new Date().toISOString()
   });
+}));
+
+app.get("/status", asyncRoute(async (_req, res) => {
+  res.json(await getRuntimeStatus(`${env.POSTGRES_DB}-api`, env.POSTGRES_DB));
 }));
 
 app.get("/live-feed", asyncRoute(async (_req, res) => {
@@ -45,6 +57,10 @@ app.get("/live-feed", asyncRoute(async (_req, res) => {
 
 app.get("/signals", asyncRoute(async (_req, res) => {
   res.json(await getSignals());
+}));
+
+app.get("/starter-workflows", asyncRoute(async (_req, res) => {
+  res.json(await getStarterWorkflows());
 }));
 
 app.get("/signals/:id", asyncRoute(async (req, res) => {
@@ -217,7 +233,7 @@ app.use(
     res: express.Response,
     _next: express.NextFunction
   ) => {
-    console.error("[forgepilot_mantle-api] unhandled route error", error);
+    console.error("[powderlens-api] unhandled route error", error);
     res.status(500).json({
       message: "Internal server error"
     });
@@ -227,11 +243,11 @@ app.use(
 const bootstrap = async () => {
   await pool.query("select 1");
   app.listen(env.API_PORT, () => {
-    console.log(`ForgePilot Mantle API listening on :${env.API_PORT}`);
+    console.log(`PowderLens API listening on :${env.API_PORT}`);
   });
 };
 
 bootstrap().catch((error) => {
-  console.error("Failed to start ForgePilot Mantle API", error);
+  console.error("Failed to start PowderLens API", error);
   process.exit(1);
 });

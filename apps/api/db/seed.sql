@@ -74,6 +74,44 @@ values
   )
 on conflict (id) do nothing;
 
+insert into starter_workflows (id, title, summary, cta, thesis, signal_id)
+values
+  (
+    '50000000-0000-0000-0000-000000000001',
+    'Open the yield-accounting critical finding',
+    'Jump into the highest-severity seeded finding and trace how ForgePilot explains the accounting drift risk to builders.',
+    'Open critical finding',
+    'The contract path treats a value-accruing asset as if it were a static-balance token during withdraw accounting. That mismatch can underflow user expectations and break Mantle-native yield vault assumptions.',
+    '20000000-0000-0000-0000-000000000001'
+  ),
+  (
+    '50000000-0000-0000-0000-000000000002',
+    'Load the emergency pause review',
+    'Open the seeded simulation note showing how an unwind path bypasses the intended pause controller.',
+    'Load simulation note',
+    'The pause architecture is incomplete because one emergency path still executes outside the expected gate. The right fix is to unify the emergency execution surface under the same controller.',
+    '20000000-0000-0000-0000-000000000002'
+  )
+on conflict (id) do nothing;
+
+insert into alert_rules (id, user_id, channel, condition, is_enabled)
+values
+  (
+    '60000000-0000-0000-0000-000000000001',
+    '00000000-0000-0000-0000-000000000002',
+    'discord',
+    'Notify when a critical finding hits severity high with confidence above 85.',
+    true
+  ),
+  (
+    '60000000-0000-0000-0000-000000000002',
+    '00000000-0000-0000-0000-000000000002',
+    'telegram',
+    'Alert when a simulation exposes an execution path without pause coverage.',
+    true
+  )
+on conflict (id) do nothing;
+
 insert into audit_logs (id, actor_email, action, target_type, target_id, reason)
 values
   (
