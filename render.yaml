@@ -1,0 +1,47 @@
+databases:
+  - name: forgepilot-postgres-fallback
+    databaseName: forgepilot
+    user: forgepilot
+    plan: free
+
+services:
+  - type: web
+    name: forgepilot-api-fallback
+    runtime: node
+    rootDir: .
+    plan: free
+    autoDeploy: false
+    buildCommand: npm install
+    startCommand: npx tsx apps/api/src/server.ts
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: API_PORT
+        value: 10000
+      - key: POSTGRES_DB
+        fromDatabase:
+          name: forgepilot-postgres-fallback
+          property: database
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: forgepilot-postgres-fallback
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: forgepilot-postgres-fallback
+          property: password
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: forgepilot-postgres-fallback
+          property: host
+      - key: POSTGRES_PORT
+        fromDatabase:
+          name: forgepilot-postgres-fallback
+          property: port
+      - key: CORS_ORIGINS
+        value: https://forgepilot.vercel.app
+      - key: RUNTIME_ORIGIN
+        value: render
+      - key: BACKEND_ROLE
+        value: fallback
