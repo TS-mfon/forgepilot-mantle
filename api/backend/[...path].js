@@ -1,7 +1,7 @@
 const PRIMARY_API_ORIGIN =
-  (process.env.PRIMARY_API_ORIGIN || process.env.VPS_API_ORIGIN || "http://172.236.110.179:4410").replace(/\/$/, "");
+  (process.env.PRIMARY_API_ORIGIN || process.env.VPS_API_ORIGIN || "http://172.236.110.179:4413").replace(/\/$/, "");
 const FALLBACK_API_ORIGIN =
-  (process.env.FALLBACK_API_ORIGIN || process.env.RENDER_API_ORIGIN || "https://powderlens-api-fallback.onrender.com").replace(/\/$/, "");
+  (process.env.FALLBACK_API_ORIGIN || process.env.RENDER_API_ORIGIN || "https://forgepilot-api-fallback.onrender.com").replace(/\/$/, "");
 
 const PRIMARY_TIMEOUT_MS = Number(process.env.PRIMARY_HEALTH_TIMEOUT_MS || 1200);
 const REQUEST_TIMEOUT_MS = Number(process.env.BACKEND_REQUEST_TIMEOUT_MS || 4500);
